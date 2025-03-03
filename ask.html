@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>真心话提问</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            flex-direction: column; /* 将内容垂直排列 */
+        }
+        .image-container {
+            margin-bottom: 20px; /* 图片与按钮之间的间距 */
+        }
+        .image-container img {
+            width: 300px; /* 图片宽度不超过容器宽度 */
+            height: auto; /* 高度自适应 */
+            border-radius: 10px; /* 图片圆角 */
+        }
+        .button-container {
+            display: flex;
+            gap: 20px; /* 按钮之间的间距 */
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #b30000;
+        }
+        /* 大图片样式 */
+        .large-image {
+            display: none; /* 初始隐藏 */
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 20px; /* 与大图片上方内容的间距 */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="image-container">
+        <!-- 初始图片 -->
+        <img id="initialImage" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F3dc4ed1e-8c79-4504-b94f-c336d337afa5%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1742751020&t=85398fe73e6eee92ed20c851e1b27d11" alt="示例图片">
+    </div>
+
+    <div class="button-container">
+        <button onclick="showLargeImage()">是的</button>
+        <button id="movingButton" onclick="changeText(this)">不是的</button>
+    </div>
+
+    <!-- 大图片 -->
+    <img id="largeImage" class="large-image" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2Fee8e2fc7-f6f5-4482-8070-359857092093%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1742751450&t=8a9d0e7b845c7376e1528ec3af5991ef" alt="大图片">
+
+    <script>
+        // 显示大图片并隐藏其他内容
+        function showLargeImage() {
+            // 隐藏初始图片和按钮容器
+            document.getElementById('initialImage').style.display = 'none';
+            document.querySelector('.button-container').style.display = 'none';
+
+            // 显示大图片
+            const largeImage = document.getElementById('largeImage');
+            largeImage.style.display = 'block';
+        }
+
+        // 处理JavaScript按钮点击事件
+        function changeText(button) {
+            if (button.innerText === "不是的") {
+                button.innerText = "确定？";
+            } else if (button.innerText === "确定？") {
+                button.innerText = "大胆";
+            } else if (button.innerText === "大胆") {
+                button.innerText = "点不到吧";
+                startMoving(button); // 开始移动按钮
+            }
+        }
+
+        // 让按钮一直移动
+        function startMoving(button) {
+            const moveInterval = setInterval(() => {
+                const maxX = window.innerWidth - button.offsetWidth;
+                const maxY = window.innerHeight - button.offsetHeight;
+
+                const randomX = Math.floor(Math.random() * maxX);
+                const randomY = Math.floor(Math.random() * maxY);
+
+                button.style.position = 'absolute'; // 动态设置为绝对定位
+                button.style.left = `${randomX}px`;
+                button.style.top = `${randomY}px`;
+            }, 200); // 每 500 毫秒移动一次
+        }
+    </script>
+
+</body>
+</html>
